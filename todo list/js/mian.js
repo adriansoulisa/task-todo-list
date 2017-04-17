@@ -1,17 +1,9 @@
 
 "use strict";
 
-var saveToLocalStorage = function saveToLocalStorage(value) {
-    localStorage.setItem('saveToLocalStorage', JSON.stringify(value));
+var saveToLocalStorage = function saveToLocalStorage(task) {
+    localStorage('task', JSON.stringify(task));
 };
-
-    Vue.directive("auto-focus", {
-        bind: function () {
-            Vue.nextTick(function () {
-                this.el.focus();
-            }.bind(this));
-        }
-    });
 
     new Vue({
         
@@ -23,18 +15,7 @@ var saveToLocalStorage = function saveToLocalStorage(value) {
                     
                 ],
 
-                editingTask: {
-
-                }
             },
-        
-        computed: {
-            areAllSelected: function () {
-                return this.tasks.every(function(task) {
-                    return task.checked;
-                }) &&  this.tasks.length > 0;
-            },
-        },
 
         methods: {
 
@@ -50,19 +31,13 @@ var saveToLocalStorage = function saveToLocalStorage(value) {
         var index = this.tasks.indexOf(task);
                 this.tasks.splice(index, 1);
             },
-
-            editTask: function (task) {
-                this.editingTask = task;
-            },
-
             endEditing: function (task) {
                 this.editingTask = {};
-                if (task.text.trim() === ""){
+                if (task.text.trim() == ""){
                     this.removeTask(task);
                 }
                 
             },
-
             clearList: function () {
                 this.tasks = [
 
@@ -83,6 +58,5 @@ var saveToLocalStorage = function saveToLocalStorage(value) {
             isChecked: function (task) {
                 return task.checked;
             }
-
         }
     });
